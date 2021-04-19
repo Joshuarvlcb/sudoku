@@ -32,10 +32,10 @@ body{
     display: grid;    
     height: 405px;
     width: 450px;
-    
+
     grid-template-columns: repeat(9,50px);
     grid-template-rows: repeat(9,45px);
-    background-color: #fafefa;
+    background-color: #fefafd;
 }
 .btns{
     margin-left: 30px;

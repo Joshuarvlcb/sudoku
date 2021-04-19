@@ -278,6 +278,7 @@ const gridTextcontent = gridArr.map((row,i) => {
     return currentRow
 })
 let clicked
+let correct;
 const clickSquare = function(){
     let emptySquares = gridArr.map((row,i) => {
         let columns = row.filter((col,j) => {
@@ -291,10 +292,11 @@ const clickSquare = function(){
         emptySquares.flat().forEach(current => {
             current.style.backgroundColor = 'rgb(255, 255, 255)';
         });
-        e.target.style.backgroundColor = 'rgb(247, 208, 215)';
-        clicked = e.target
-         seletNum()
-         checkSquare()
+        e.target.style.backgroundColor = 'rgb(255, 204, 238)';
+            clicked = e.target;
+         seletNum();
+        //  correct = 
+       correct = checkSquare();
     }
   
     emptySquares.flat().forEach(curr => {
@@ -307,13 +309,10 @@ const seletNum = function(){
         btns.forEach(curr => {
             curr.addEventListener('click',function(e){
                 const num = e.target.textContent;
-                clicked.textContent = num
-                    if(checkSquare() == curr.textContent){
+                    if(String(correct) == curr.textContent){
                         clicked.textContent = num
-                        clicked.style.color = 'pink'
-                        clicked.style.backgroundColor = '#fafefa'
+                        clicked.style.color = '#ff52c5'
                     }else{
-                        clicked.textContent = ''
                         clicked.style.backgroundColor = '#fa9e9e'
                     }
             })
@@ -324,13 +323,13 @@ const checkSquare = function(){
     let coards = []
     gridArr.forEach((row,i) => {
         row.forEach((col,j) => {
-            if(col.style.backgroundColor == 'rgb(247, 208, 215)'){
+            if(col.style.backgroundColor == 'rgb(255, 204, 238)'){
                 coards.push(i,j)
             }
         })
     })
 let answer = newAnswers[coards[0]][coards[1]]
-    return answer
+return answer
 }
 clickSquare()
 getPossible(_BOARD,0,2)
