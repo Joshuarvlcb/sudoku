@@ -1,4 +1,9 @@
 const gridContainer = document.querySelector('.container');
+let gridArr = new Array(9).fill('').map((_,i) => {
+    return new Array(9).fill('').map((_,j,arr) => {
+        return null
+    })
+})
 
 const _BOARD = [
     [" ", "9", " ", " ", "4", "2", "1", "3", "6"],
@@ -57,7 +62,6 @@ const _BOARD = [
   };
   console.log(getQuad(_COARDS, 1));
   //filter through all the possible values and return all of the used values and return only the possible values of that cell
-   
   const getPossible = function (board, row, col) {
     let inColumn = getColumn(board, col);
     let inRow = getRow(board, row);
@@ -107,7 +111,7 @@ const _BOARD = [
       }
     });
    
-    notPossible = notPossible.filter((curr) => curr !== ".");
+    notPossible = notPossible.filter((curr) => curr !== " ");
    
     notPossible.forEach((_, n) => {
       possible.forEach((_, p) => {
@@ -116,9 +120,10 @@ const _BOARD = [
         }
       });
     });
-    return possible;
+    return possible
   };
-  console.log(getPossible(_BOARD, 0, 0));
+  console.log(_BOARD)
+  console.log(gridArr)
   const fillInCell = function (board, row, column) {
     let possible = getPossible(board, row, column);
    
@@ -182,11 +187,7 @@ gridItems()
 81 items
 gridArr = [9 rows, 9 columns in each row ]
 */
-let gridArr = new Array(9).fill('').map((_,i) => {
-    return new Array(9).fill('').map((_,j,arr) => {
-        return null
-    })
-})
+
 let rowMultiplyer = 0;
 let nodeArr = Array.from(gridContainer.querySelectorAll('.col'))
 
@@ -261,6 +262,12 @@ add the number also make sure they cant rechange the number
 
 if incorect make the background light red and remove number
 */
+const gridTextcontent = gridArr.map((row,i) => {
+    let currentRow = row.map((col,j) => {
+        return col.textContent
+    });
+    return currentRow
+})
 let clicked
 const clickSquare = function(){
     let emptySquares = gridArr.map((row,i) => {
@@ -271,16 +278,21 @@ const clickSquare = function(){
         })
         return columns
     })
-    emptySquares.flat().forEach(curr => {
-        curr.addEventListener('click',(e) => {
-            emptySquares.flat().forEach(current => {
-                current.style.backgroundColor = 'rgb(255, 255, 255)';
-            });
-            e.target.style.backgroundColor = 'rgb(247, 208, 215)';
-            clicked = e.target
-            seletNum()
-
+    function eventSquare (e){
+        emptySquares.flat().forEach(current => {
+            current.style.backgroundColor = 'rgb(255, 255, 255)';
         });
+        e.target.style.backgroundColor = 'rgb(247, 208, 215)';
+        clicked = e.target
+        console.log(e.target.textContent)
+         seletNum()
+         squareCorrect()
+
+        
+    }
+  
+    emptySquares.flat().forEach(curr => {
+        curr.addEventListener('click',eventSquare);
     });
 };
 const btns = Array.from(document.querySelectorAll('.btn'));
@@ -289,13 +301,28 @@ const seletNum = function(){
         btns.forEach(curr => {
             curr.addEventListener('click',function(e){
                 const num = e.target.textContent
-                clicked.textContent = num
+                const possibles = squareCorrect()
+                possibles.forEach(number => {
+                    if(number == curr.textContent){
+                        clicked.textContent = number
+                    }else{
+                        clicked.style.backgroundColor = 'red'
+                    }
+                })
             })
         })
     }
 }
 const squareCorrect = function(){
-    
+    let coards = []
+     gridArr.forEach((row,i) => {
+        row.forEach((col,j) => {
+            if(col.style.backgroundColor == 'rgb(247, 208, 215)'){
+                coards.push(i,j)
+            }
+        })
+    })
+    return getPossible(gridTextcontent,coards[0],coards[1])
 }
 clickSquare()
-
+getPossible(_BOARD,0,2)
