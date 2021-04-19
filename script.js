@@ -127,30 +127,39 @@ const _BOARD = [
   const fillInCell = function (board, row, column) {
     let possible = getPossible(board, row, column);
    
-    if (board[row][column] == ".") {
+    if (board[row][column] == " ") {
       if (possible.length == 1) {
         board[row][column] = possible[0];
       }
     }
   };
-//   let state = true;
-//   while (state) {
-//     let counter = 0;
-//     for (row2 in _BOARD) {
-//       for (col2 in _BOARD[row2]) {
-//         fillInCell(_BOARD, row2, col2);
+  let newAnswers = new Array(9).fill(0).map((row,i) => {
+      return new Array(9).fill(9).map((col) => {
+          return null
+      })
+  })
+  newAnswers.forEach((row,i) =>{
+      row.forEach((col,j) => {
+          newAnswers[i][j] = _BOARD[i][j]
+      })
+  })
 
-//         if (typeof _BOARD[row2][col2] == "number") {
-//           counter++;
-//         }
-
-//         if (counter == 81) {
-//           state = false;
-//         }
-//       }
-//     }
-//   }
-//   console.table(_BOARD);
+  let state = true;
+  while (state) {
+    let counter = 0;
+    for (row2 in newAnswers) {
+      for (col2 in newAnswers[row2]) {
+        fillInCell(newAnswers, row2, col2);
+        if (newAnswers[row2][col2] !== " ") {
+          counter++;
+        }
+        if (counter == 81) {
+          state = false;
+        }
+      }
+    }
+  }
+  console.table(newAnswers);
    
    
    
@@ -284,11 +293,8 @@ const clickSquare = function(){
         });
         e.target.style.backgroundColor = 'rgb(247, 208, 215)';
         clicked = e.target
-        console.log(e.target.textContent)
          seletNum()
-         squareCorrect()
-
-        
+         checkSquare()
     }
   
     emptySquares.flat().forEach(curr => {
@@ -300,29 +306,31 @@ const seletNum = function(){
     if(clicked){
         btns.forEach(curr => {
             curr.addEventListener('click',function(e){
-                const num = e.target.textContent
-                const possibles = squareCorrect()
-                possibles.forEach(number => {
-                    if(number == curr.textContent){
-                        clicked.textContent = number
+                const num = e.target.textContent;
+                clicked.textContent = num
+                    if(checkSquare() == curr.textContent){
+                        clicked.textContent = num
+                        clicked.style.color = 'pink'
+                        clicked.style.backgroundColor = '#fafefa'
                     }else{
-                        clicked.style.backgroundColor = 'red'
+                        clicked.textContent = ''
+                        clicked.style.backgroundColor = '#fa9e9e'
                     }
-                })
             })
         })
     }
 }
-const squareCorrect = function(){
+const checkSquare = function(){
     let coards = []
-     gridArr.forEach((row,i) => {
+    gridArr.forEach((row,i) => {
         row.forEach((col,j) => {
             if(col.style.backgroundColor == 'rgb(247, 208, 215)'){
                 coards.push(i,j)
             }
         })
     })
-    return getPossible(gridTextcontent,coards[0],coards[1])
+let answer = newAnswers[coards[0]][coards[1]]
+    return answer
 }
 clickSquare()
 getPossible(_BOARD,0,2)
