@@ -1,61 +1,61 @@
 *::before,
 *,
-*::after{
-    padding: 0px;
-    margin: 0px;
-    box-sizing: border-box;
-    font-family: sans-serif;
+*::after {
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+  font-family: sans-serif;
 }
-body{
-   background-color: #36399A;
+body {
+  background-color: #36399a;
 }
-.col{
-    height: 45px;
-    width: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color:black;
-    font-size: 25.8px;
-}   
+.col {
+  height: 45px;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  font-size: 25.8px;
+}
 
 // F69AD1
-.flex-con{
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.flex-con {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.container{
-    border-radius: 10px;
-    display: grid;    
-    height: 405px;
-    width: 450px;
+.container {
+  border-radius: 10px;
+  display: grid;
+  height: 405px;
+  width: 450px;
 
-    grid-template-columns: repeat(9,50px);
-    grid-template-rows: repeat(9,45px);
-    background-color: #fefafd;
+  grid-template-columns: repeat(9, 50px);
+  grid-template-rows: repeat(9, 45px);
+  background-color: #fefafd;
 }
-.btns{
-    margin-left: 30px;
-    height: 380px;
-    width: 50px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
+.btns {
+  margin-left: 30px;
+  height: 380px;
+  width: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
 }
-.btn{
-    cursor: pointer;
-    width: 30px;
-    height: 30px;
-    border-radius: 8px;
+.btn {
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
 
-    background-color: rgb(255, 255, 255);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fd54ba;
-    font-size: 20px;
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #d86b22;
+  font-size: 20px;
 }
