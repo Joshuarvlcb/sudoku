@@ -333,3 +333,19 @@ return answer
 }
 clickSquare()
 getPossible(_BOARD,0,2)
+
+
+class Car {
+  constructor(speed){
+    this.speed = speed
+  }
+  get speedUS(){
+    return this.speed / 1.6
+  }
+  set kiloPerHour(speed){
+    this.speed = speed * 1.6
+  }
+}
+const ford = new Car(120)
+ford.kiloPerHour = 80
+console.log(ford.speed)
