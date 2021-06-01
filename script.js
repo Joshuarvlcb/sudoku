@@ -369,6 +369,8 @@ document.querySelector("#select").addEventListener("change", function (e) {
     case "_BOARD":
       displayGame(_BOARD);
       break;
+    default:
+      displayGame(_BOARD);
   }
   board = [];
   switch (e.target.value) {
@@ -381,6 +383,8 @@ document.querySelector("#select").addEventListener("change", function (e) {
     case "_BOARD":
       board = newAnswers;
       break;
+    default:
+      board = newAnswers;
   }
 });
 emptySquares = gridArr.map((row, i) => {
