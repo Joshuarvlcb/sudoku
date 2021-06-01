@@ -356,6 +356,7 @@ solveBtn.addEventListener("click", () => {
 });
 document.querySelector("#select").addEventListener("change", function (e) {
   duration = 300;
+  solveState = false;
   clearInterval(timerIterval);
   timerF();
   switch (e.target.value) {
