@@ -1,35 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
-    <title>Sudoku</title>
-</head>
-<body>
-    <div class="flex-con">
-        <select name="" id="select">
-            <option value="easy">easy</option>
-            <option value="medium">medium</option>
-            <option value="hard">hard</option>
-        </select>
-        <div class="container">
-        
-        </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- CSS only -->
+    <!-- JavaScript Bundle with Popper -->
 
-        <div class="btns">
-            <div class="btn">1</div>
-            <div class="btn">2</div>
-            <div class="btn">3</div>
-            <div class="btn">4</div>
-            <div class="btn">5</div>
-            <div class="btn">6</div>
-            <div class="btn">7</div>
-            <div class="btn">8</div>
-            <div class="btn">9</div>
+    <link rel="stylesheet" href="css/style.css" />
+    <title>Sudoku</title>
+  </head>
+  <body>
+    <div class="flex-con">
+      <div class="header">
+        <select class="form-select" name="" id="select">
+          <option value="" selected></option>
+          <option value="_BOARD">Easy</option>
+          <option value="_MED">Medium</option>
+          <option value="_HARD">Hard</option>
+        </select>
+
+        <button class="solve">Solve</button>
+
+        <div class="timer">5:00</div>
+      </div>
+
+      <div class="container"></div>
+
+      <div class="btns">
+        <div class="btn">1</div>
+        <div class="btn">2</div>
+        <div class="btn">3</div>
+        <div class="btn">4</div>
+        <div class="btn">5</div>
+        <div class="btn">6</div>
+        <div class="btn">7</div>
+        <div class="btn">8</div>
+        <div class="btn">9</div>
+      </div>
+    </div>
+
+    <div class="rules-container">
+      <div class="rules">
+        <div class="rules-text">Rules</div>
+        <div class="border-rules"></div>
+        <div class="no-cheating">
+          1. Every square has to contain a single number
+          <br />
+          <br />
+          2. Only the numbers from 1 through to 9 can be used
+          <br />
+          <br />
+          3. Each 3×3 box can only contain each number from 1 to 9 once
+          <br />
+          <br />
+          4.Each vertical column can only contain each number from 1 to 9 once
+          <br />
+          <br />
+          5.Each horizontal row can only contain each number from 1 to 9 once
+          <br />
+          <br />
+          Whenever you click on a sqaure you have to unclick to click somewhere
+          else. Goodluck 😁
         </div>
+        <div class="check">Start</div>
+      </div>
     </div>
     <script src="./script.js"></script>
-</body>
+  </body>
 </html>

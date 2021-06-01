@@ -44,7 +44,7 @@ const _MED = [
   ["5", "6", "2", " ", "1", " ", " ", " ", " "],
   ["9", "1", " ", " ", "7", " ", " ", "5", " "],
   [" ", " ", " ", "5", " ", "9", "8", " ", "1"],
-]
+];
 const _HARD = [
   ["2", " ", " ", "6", "9", " ", "8", " ", "1"],
   [" ", " ", " ", " ", " ", "3", "6", " ", " "],
@@ -57,8 +57,7 @@ const _HARD = [
   ["3", "7", " ", "9", " ", "6", " ", "1", " "],
   [" ", "2", "9", "1", " ", "8", " ", " ", " "],
   ["5", "6", " ", "3", " ", " ", " ", "2", " "],
-]
-
+];
 
 const getRow = function (board, row) {
   //return an array with all the array elements from the row
@@ -188,7 +187,7 @@ while (state) {
 }
 console.table(newAnswers);
 
-const sodokuSolver = function(board){
+const sodokuSolver = function (board) {
   let state = true;
   let newAnswers = new Array(9).fill(0).map((row, i) => {
     return new Array(9).fill(9).map((col) => {
@@ -214,12 +213,12 @@ const sodokuSolver = function(board){
       }
     }
   }
-  return newAnswers
-}
-let med = sodokuSolver(_MED)
-let hard = sodokuSolver(_HARD)
-console.table(med)
-console.log(hard)
+  return newAnswers;
+};
+let medium = sodokuSolver(_MED);
+let hard = sodokuSolver(_HARD);
+console.table(medium);
+console.log(hard);
 /**'
  *1st 
    create the board 
@@ -300,215 +299,98 @@ const AddingCoardBorders = function () {
     });
 };
 AddingCoardBorders();
-
 let displayGame = function (board) {
+  // gridArr.forEach((row, i) => {
+  //   row.forEach((col, j) => {
+  //     col.innerHTML = "";
+  //   });
+  // });
   gridArr.forEach((row, i) => {
     row.forEach((col, j) => {
-      col.textContent = board[i][j];
+      col.style.color = "black";
+      col.innerHTML = board[i][j];
     });
   });
 };
-displayGame(_BOARD);
+let emptySquares;
+const timer = document.querySelector(".timer");
+const solveBtn = document.querySelector(".solve");
 
-/**
- * 
- * click on a square and make the background color light pink and able to put a number
- * on the clicked square if it it correct display the correct number if it is incorrect make 
- * the background color of the square light red and dont display the number
- *   
- * 
- * 
-add event listeners to all the empty squares
+let duration = 300;
+let timerIterval;
+let board;
 
-add a background color of light pink to know the square was selected and whenever you click 
-on a new square changed the previous square to a white background
-
-//click on a num check to see if it is incorrect or incorect if correct make the color pink and
-add the number also make sure they cant rechange the number
-
-if incorect make the background light red and remove number
-*/
-let gridTextcontent = gridArr.map((row, i) => {
-  let currentRow = row.map((col, j) => {
-    return col.textContent;
-  });
-  return currentRow;
+const timerF = function () {
+  let min;
+  let sec;
+  timerIterval = setInterval(() => {
+    min = parseInt(duration / 60, 10);
+    sec = parseInt(duration % 60, 10);
+    duration--;
+    if (sec < 10) {
+      sec = `0${sec}`;
+    }
+    console.log(min, sec);
+    timer.textContent = `${min}:${sec}`;
+  }, 1000);
+};
+console.log(newAnswers);
+document.querySelector(".check").addEventListener("click", function () {
+  console.log("foo");
+  document.querySelector(".rules-container").style.display = "none";
 });
-let clicked = false;
-let correct;
-//this is giving is a array of the clickable squares
-let emptySquares = gridArr.map((row, i) => {
-  let columns = row.filter((col, j) => {
-    if (col.textContent == " ") {
+let solveState = false;
+
+solveBtn.addEventListener("click", () => {
+  for (let i = 0; i < gridArr.flat().length; i++) {
+    setTimeout(() => {
+      gridArr.flat()[i].style.color = "#000000".replace(/0/g, function () {
+        return (~~(Math.random() * 16)).toString(16);
+      });
+
+      gridArr.flat()[i].innerHTML = board.flat()[i];
+    }, 800 * Math.random());
+    clearInterval(timerIterval);
+  }
+  solveState = true;
+});
+document.querySelector("#select").addEventListener("change", function (e) {
+  duration = 300;
+  clearInterval(timerIterval);
+  timerF();
+  switch (e.target.value) {
+    case "_MED":
+      displayGame(_MED);
+      break;
+    case "_HARD":
+      displayGame(_HARD);
+      break;
+    case "_BOARD":
+      displayGame(_BOARD);
+      break;
+  }
+  board = [];
+  switch (e.target.value) {
+    case "_MED":
+      board = medium;
+      break;
+    case "_HARD":
+      board = hard;
+      break;
+    case "_BOARD":
+      board = newAnswers;
+      break;
+  }
+});
+emptySquares = gridArr.map((row, i) => {
+  return row.filter((col, j) => {
+    console.log(col);
+    if (col.textContent == "") {
       return col;
     }
   });
-  return columns;
 });
-
-const clickSquare = function () {
-  emptySquares = gridArr.map((row, i) => {
-    let columns = row.filter((col, j) => {
-      if (col.textContent == " ") {
-        return col;
-      }
-    });
-    return columns;
-  });
-  //click == true
-  //click ==false
-  emptySquares.flat().forEach((curr) => {
-    curr.addEventListener("mouseenter", (e) => {
-      if (clicked == false) {
-
-        gridArr.forEach((row, i) => {
-          row.forEach((col, j) => {
-             col.style.backgroundColor = 'white'
-       });
-     })
-        emptySquares
-          .flat()
-          .forEach((current) => (current.style.backgroundColor = "white"));
-
-        e.target.style.backgroundColor = "#ffd6ee";
-      }
-    });
-  });
-
-  function eventSquare(e) {
-    emptySquares.flat().forEach((current) => {
-      current.style.backgroundColor = "rgb(255, 255, 255)";
-    });
-    clicked == false ? (clicked = e.target) : (clicked = false);
-    e.target.style.backgroundColor = "rgb(255, 204, 238)";
-    //  correct =
-    correct = checkSquare();
-    seletNum();
-  }
-
-  emptySquares.flat().forEach((curr) => {
-    curr.addEventListener("click", eventSquare);
-  });
-};
-
-function keyDown(e) {
-  console.log(e);
-  console.log("hi");
-}
-function updateBoard(col, text) {
-  let column = col;
-  console.log(column);
-  if (text) {
-    return (gridTextcontent = gridTextcontent.map((row, i) => {
-      if (column[0] == i) {
-        return row.map((col, j) => {
-          if (column[1] == j) {
-            return text;
-          }
-          return col;
-        });
-      }
-      return row;
-    }));
-  }
-  //2 arrays for the cols and values
-  //make the cols able to delete
-  };
-const btns = Array.from(document.querySelectorAll(".btn"));
-//currentBoard
-let currentBoard;
-const seletNum = function () {
-  if (clicked) {
-    btns.forEach((curr) => {
-      curr.addEventListener("click", function (e) {
-
-       
-        const num = e.target.textContent;
-        if (clicked) {
-          checkForIncorrect(checkSquare(false), num);
-        }
-
-        if (correct.includes(+num)) {
-          clicked.textContent = num;
-          clicked.style.color = "#d86b22";
-          updateBoard(checkSquare(false), clicked.textContent);
-          console.table(gridTextcontent);
-        } else {
-          8;
-          clicked.style.backgroundColor = "#fa9e9e";
-          console.log();
-        }
-      });
-    });
-    window.addEventListener("keydown", function (e) {
-      if (clicked) {
-        checkForIncorrect( checkSquare(false), e.key);
-      }
-      if (Number.parseInt(e.key)) {
-        if (correct.includes(+e.key)) {
-          clicked.textContent = e.key;
-          clicked.style.color = "#d86b22";
-          updateBoard(checkSquare(false), e.key);
-        } else {
-          clicked.style.backgroundColor = "#fa9e9e";
-        }
-      }
-    });
-  }
-};
-
-function checkSquare(answerArray = true) {
-  let coards = [];
-  gridArr.forEach((row, i) => {
-    row.forEach((col, j) => {
-      if (
-        col.style.backgroundColor == "rgb(255, 204, 238)"
-      ) {
-        coards.push(i, j);
-      }
-    });
-  });
-
-  let answer = getPossible(gridTextcontent, coards[0], coards[1]);
-  if (answerArray) {
-    return answer;
-  }
-  return coards;
-}
-clickSquare();
-
-function checkForIncorrect(coards, chekingAnswer) {
-  let [rowNumber, column] = coards;
-
-
-  //paramters will be the current board
-  //where are we going to check? each time we click on a square
-  //
-  //loop through the current board and get the cooards for the incorrect column
-  //loop throgh the row and find the incrrect number in the row
-  //when i have found it set bg to red
-  //loop trough column
-  //
-  //we will push the cols that are incorrect into array
-  //we are going to turn then bg color red
-
-  gridArr.forEach((row, i) => {
-    if (row[column].textContent == chekingAnswer) {
-      row[column].style.backgroundColor = '#fa9e9e'
-        }
-    });
-
-  gridArr.forEach((row, i) => {
-    if (i == rowNumber) {
-       row.forEach((col, j) => {
-        if (col.textContent == chekingAnswer) {
-          console.log(true)
-          col.style.backgroundColor = '#fa9e9e'
-        }
-      });
-    }
-  });
-}
+console.log(emptySquares);
 
 // //!!add the hover effect
 // //!!add the unclick to the square
@@ -522,9 +404,178 @@ function checkForIncorrect(coards, chekingAnswer) {
 //  */
 // //!!add key events to press keys
 
-
-//add different boards create select
-//add a timer
-//solve the whole sudoku btn
+//!!add different boards create select
+//!!add a timer
+//!!solve the whole sudoku btn
 //local storage
-//create modal in html with the rules
+//!!create modal in html with the rules
+
+//!!make the colors back to black
+//when we solve we are not allowed to hover
+//fix the bug on the board
+
+let clicked = false;
+let correct;
+//this is giving is a array of the clickable squares
+
+let gridTextcontent = gridArr.map((row, i) => {
+  let currentRow = row.map((col, j) => {
+    return col.textContent;
+  });
+  return currentRow;
+});
+
+console.table(emptySquares);
+
+const clickSquare = function () {
+  emptySquares.flat().forEach((curr) => {
+    curr.addEventListener("mouseenter", (e) => {
+      if (clicked == false && solveState == false) {
+        gridArr.forEach((row, i) => {
+          row.forEach((col, j) => {
+            col.style.backgroundColor = "white";
+          });
+        });
+        emptySquares
+          .flat()
+          .forEach((current) => (current.style.backgroundColor = "white"));
+
+        curr.style.backgroundColor = "#ffd6ee";
+      }
+    });
+  });
+
+  function eventSquare(e) {
+    emptySquares.flat().forEach((current) => {
+      current.style.backgroundColor = "rgb(255, 255, 255)";
+    });
+    clicked == false ? (clicked = e.target) : (clicked = false);
+    e.target.style.backgroundColor = "rgb(255, 204, 238)";
+    console.log(clicked);
+    //  correct =
+    correct = checkSquare();
+    seletNum();
+  }
+
+  emptySquares.flat().forEach((curr) => {
+    curr.addEventListener("click", eventSquare);
+  });
+};
+
+function updateBoard(col, text) {
+  let column = col;
+  console.log(column);
+  if (text) {
+    return (gridTextcontent = gridTextcontent.map((row, i) => {
+      o;
+      if (column[0] == i) {
+        return row.map((col, j) => {
+          if (column[1] == j) {
+            return text;
+          }
+          return col;
+        });
+      }
+      return row;
+    }));
+  }
+  //2 arrays for the cols and values
+  //make the cols able to delete
+}
+
+const btns = Array.from(document.querySelectorAll(".btn"));
+const seletNum = function () {
+  if (clicked) {
+    btns.forEach((curr) => {
+      curr.addEventListener("click", function (e) {
+        const num = e.target.textContent;
+        if (clicked) {
+          checkForIncorrect(checkSquare(false), num);
+        }
+
+        if (correct.includes(+num)) {
+          clicked.textContent = num;
+          clicked.style.color = "#fd65f0";
+          clicked.style.backgroundColor = "#8987ff8f";
+          updateBoard(checkSquare(false), clicked.textContent);
+          console.table(gridTextcontent);
+        } else {
+          8;
+          clicked.style.backgroundColor = "#fa9e9e";
+          console.log();
+        }
+      });
+    });
+    window.addEventListener("keydown", function (e) {
+      if (clicked) {
+        checkForIncorrect(checkSquare(false), e.key);
+        if (e.key == "Backspace") {
+          clicked.textContent = "";
+        }
+      }
+      if (Number.parseInt(e.key)) {
+        if (correct.includes(+e.key)) {
+          clicked.textContent = e.key;
+          clicked.style.color = "#fd65f0";
+          clicked.style.backgroundColor = "#8987ff8f";
+
+          updateBoard(checkSquare(false), e.key);
+        } else {
+          clicked.style.backgroundColor = "#fa9e9e";
+        }
+      }
+    });
+  }
+};
+
+function checkSquare(answerArray = true) {
+  let coards = [];
+  gridArr.forEach((row, i) => {
+    row.forEach((col, j) => {
+      if (col.style.backgroundColor == "rgb(255, 204, 238)") {
+        coards.push(i, j);
+      }
+    });
+  });
+
+  if (answerArray) {
+    let answer = getPossible(gridTextcontent, coards[0], coards[1]);
+
+    return answer;
+  }
+  return coards;
+}
+clickSquare();
+
+function checkForIncorrect(coards, chekingAnswer) {
+  let [rowNumber, column] = coards;
+
+  //paramters will be the current board
+  //where are we going to check? each time we click on a square
+  //
+  //loop through the current board and get the cooards for the incorrect column
+  //loop throgh the row and find the incrrect number in the row
+  //when i have found it set bg to red
+  //loop trough column
+  //
+  //we will push the cols that are incorrect into array
+  //we are going to turn then bg color red
+  gridArr.forEach((row, i) => {
+    if (row[column]?.textContent == chekingAnswer) {
+      row[column].style.backgroundColor = "#fa9e9e";
+      correct = [];
+    }
+  });
+
+  gridArr.forEach((row, i) => {
+    if (i == rowNumber) {
+      row.forEach((col, j) => {
+        if (col.textContent == chekingAnswer) {
+          console.log(true);
+          col.style.backgroundColor = "#fa9e9e";
+          correct = [];
+        }
+      });
+    }
+  });
+}
