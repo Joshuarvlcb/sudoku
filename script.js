@@ -339,15 +339,13 @@ document.querySelector(".check").addEventListener("click", function () {
   console.log("foo");
   document.querySelector(".rules-container").style.display = "none";
 });
-let solveState = false;
+let solveState = true;
 
 solveBtn.addEventListener("click", () => {
   for (let i = 0; i < gridArr.flat().length; i++) {
     setTimeout(() => {
-      gridArr.flat()[i].style.color = "#000000".replace(/0/g, function () {
-        return (~~(Math.random() * 16)).toString(16);
-      });
-
+      gridArr.flat()[i].style.color = "purple";
+      gridArr.flat()[i].style.backgroundColor = "white";
       gridArr.flat()[i].innerHTML = board.flat()[i];
     }, 800 * Math.random());
     clearInterval(timerIterval);
@@ -451,15 +449,17 @@ const clickSquare = function () {
   });
 
   function eventSquare(e) {
-    emptySquares.flat().forEach((current) => {
-      current.style.backgroundColor = "rgb(255, 255, 255)";
-    });
-    clicked == false ? (clicked = e.target) : (clicked = false);
-    e.target.style.backgroundColor = "rgb(255, 204, 238)";
-    console.log(clicked);
-    //  correct =
-    correct = checkSquare();
-    seletNum();
+    if (solveState == false) {
+      emptySquares.flat().forEach((current) => {
+        current.style.backgroundColor = "rgb(255, 255, 255)";
+      });
+      clicked == false ? (clicked = e.target) : (clicked = false);
+      e.target.style.backgroundColor = "rgb(255, 204, 238)";
+      console.log(clicked);
+      //  correct =
+      correct = checkSquare();
+      seletNum();
+    }
   }
 
   emptySquares.flat().forEach((curr) => {
