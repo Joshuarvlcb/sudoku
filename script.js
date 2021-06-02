@@ -340,19 +340,10 @@ document.querySelector(".check").addEventListener("click", function () {
   document.querySelector(".rules-container").style.display = "none";
 });
 let solveState = true;
+let solveButtonState = 1;
 
-solveBtn.addEventListener("click", () => {
-  for (let i = 0; i < gridArr.flat().length; i++) {
-    setTimeout(() => {
-      gridArr.flat()[i].style.color = "purple";
-      gridArr.flat()[i].style.backgroundColor = "white";
-      gridArr.flat()[i].innerHTML = board.flat()[i];
-    }, 800 * Math.random());
-    clearInterval(timerIterval);
-  }
-  solveState = true;
-});
 document.querySelector("#select").addEventListener("change", function (e) {
+  solveButtonState = 1;
   duration = 300;
   solveState = false;
   clearInterval(timerIterval);
@@ -394,7 +385,21 @@ emptySquares = gridArr.map((row, i) => {
   });
 });
 console.log(emptySquares);
+solveBtn.addEventListener("click", () => {
+  if (board && solveButtonState == 1) {
+    for (let i = 0; i < gridArr.flat().length; i++) {
+      setTimeout(() => {
+        gridArr.flat()[i].style.color = "purple";
+        gridArr.flat()[i].style.backgroundColor = "white";
+        gridArr.flat()[i].innerHTML = board.flat()[i];
+      }, 1800 * Math.random());
+    }
+    clearInterval(timerIterval);
 
+    solveState = true;
+    solveButtonState++;
+  }
+});
 // //!!add the hover effect
 // //!!add the unclick to the square
 // //work on the the the board logoc
@@ -472,7 +477,6 @@ function updateBoard(col, text) {
   console.log(column);
   if (text) {
     return (gridTextcontent = gridTextcontent.map((row, i) => {
-      o;
       if (column[0] == i) {
         return row.map((col, j) => {
           if (column[1] == j) {

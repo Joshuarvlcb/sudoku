@@ -5,11 +5,11 @@
   margin: 0px;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-  font-family: sans-serif;
 }
 
 body {
   background-color: #36399a;
+  font-family: sans-serif;
 }
 
 .col {
@@ -29,7 +29,7 @@ body {
 }
 
 .flex-con {
-  width: 100vw;
+  min-width: 100vw;
   height: 100vh;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -47,13 +47,13 @@ body {
 }
 
 .header {
+  width: 450px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  width: 440px;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
@@ -75,11 +75,14 @@ body {
   font-size: 18px;
   cursor: pointer;
   border-radius: 5px;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
 }
 
 .header .timer {
   background: black;
-  padding: 10px 15px;
+  padding: 10px 25px;
   font-size: 20px;
   color: white;
   -ms-flex-item-align: center;
@@ -102,35 +105,25 @@ body {
 }
 
 .btns {
-  margin-left: 30px;
   margin-top: 40px;
-  width: 400px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: space-evenly;
-      -ms-flex-pack: space-evenly;
-          justify-content: space-evenly;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  padding: 0 10px;
 }
 
 .btn {
   cursor: pointer;
-  width: 30px;
-  height: 30px;
+  padding: 10px 15px;
   border-radius: 8px;
+  margin-left: 10px;
+  margin-bottom: 10px;
   background-color: white;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
   color: #ff15a5e3;
   font-size: 20px;
 }
@@ -222,5 +215,32 @@ body {
           align-items: center;
   cursor: pointer;
   border-radius: 3px;
+}
+
+@media only screen and (max-width: 550px) {
+  .header {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    height: 200px;
+    width: 350px;
+  }
+  .container {
+    padding: 0;
+    display: -ms-grid;
+    display: grid;
+    height: 405px;
+    width: 350px;
+    overflow: hidden;
+    -ms-grid-columns: (38px)[9];
+        grid-template-columns: repeat(9, 38px);
+    -ms-grid-rows: (45px)[9];
+        grid-template-rows: repeat(9, 45px);
+    background-color: #ffffff;
+  }
 }
 /*# sourceMappingURL=style.min.css.map */
