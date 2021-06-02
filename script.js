@@ -490,7 +490,9 @@ function updateBoard(col, text) {
   //2 arrays for the cols and values
   //make the cols able to delete
 }
-
+document.querySelector(".del").addEventListener("click", function () {
+  clicked.textContent = "";
+});
 const btns = Array.from(document.querySelectorAll(".btn"));
 const seletNum = function () {
   if (clicked) {
@@ -508,7 +510,6 @@ const seletNum = function () {
           updateBoard(checkSquare(false), clicked.textContent);
           console.table(gridTextcontent);
         } else {
-          8;
           clicked.style.backgroundColor = "#fa9e9e";
           console.log();
         }
