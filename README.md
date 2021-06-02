@@ -11,7 +11,7 @@ The sudoku that I made has a algorithm to solve any solvable sudoku board. You c
 
 3. As a user if I get stuck I would like to __see the answer__ of the boards
 
-4. As a user I would like to be able to __press on a key 
+4. As a user I would like to be able to __press on a key__ 
 
 ### Features
 
