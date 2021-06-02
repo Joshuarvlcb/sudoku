@@ -1,6 +1,6 @@
-# sudoku
+# Sudoku
 
-### Descriptio
+### Description
 The sudoku that I made has a algorithm to solve any solvable sudoku board. You can play 3 boards with different level of difficulty. I also have a 5 miniute timer and if you put a incorrect number in a square the board will tell you why you cant put that number. I also have a solve button and it has a cool animation
 
 ### User Stories
