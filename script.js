@@ -299,18 +299,50 @@ const AddingCoardBorders = function () {
     });
 };
 AddingCoardBorders();
+function eventSquare(e) {
+  if (solveState == false) {
+    emptySquares.flat().forEach((current) => {
+      current.style.backgroundColor = "rgb(255, 255, 255)";
+    });
+    clicked == false ? (clicked = e.target) : (clicked = false);
+    e.target.style.backgroundColor = "rgb(255, 204, 238)";
+    console.log(clicked);
+    //  correct =
+    correct = checkSquare();
+    seletNum();
+  }
+}
+const hover = function (e) {
+  if (clicked == false && solveState == false) {
+    gridArr.forEach((row, i) => {
+      row.forEach((col, j) => {
+        col.style.backgroundColor = "white";
+      });
+    });
+    emptySquares
+      .flat()
+      .forEach((current) => (current.style.backgroundColor = "white"));
+
+    e.target.style.backgroundColor = "#ffd6ee";
+  }
+};
 let displayGame = function (board) {
-  // gridArr.forEach((row, i) => {
-  //   row.forEach((col, j) => {
-  //     col.innerHTML = "";
-  //   });
-  // });
   gridArr.forEach((row, i) => {
     row.forEach((col, j) => {
+      col.removeEventListener("mouseenter", hover);
       col.style.color = "black";
-      col.innerHTML = board[i][j];
+      col.textContent = board[i][j];
     });
   });
+
+  gridArr.forEach((row, i) => {
+    row.forEach((col, j) => {
+      col.removeEventListener("mouseenter", hover, true);
+      col.removeEventListener("mouseenter", eventSquare, true);
+    });
+  });
+
+  console.log(gridArr);
 };
 let emptySquares;
 const timer = document.querySelector(".timer");
@@ -330,11 +362,9 @@ const timerF = function () {
     if (sec < 10) {
       sec = `0${sec}`;
     }
-    console.log(min, sec);
     timer.textContent = `${min}:${sec}`;
   }, 1000);
 };
-console.log(newAnswers);
 document.querySelector(".check").addEventListener("click", function () {
   console.log("foo");
   document.querySelector(".rules-container").style.display = "none";
@@ -362,6 +392,7 @@ document.querySelector("#select").addEventListener("change", function (e) {
       displayGame(_BOARD);
   }
   board = [];
+
   switch (e.target.value) {
     case "_MED":
       board = medium;
@@ -375,16 +406,23 @@ document.querySelector("#select").addEventListener("change", function (e) {
     default:
       board = newAnswers;
   }
-});
-emptySquares = gridArr.map((row, i) => {
-  return row.filter((col, j) => {
-    console.log(col);
-    if (col.textContent == "") {
-      return col;
-    }
+
+  emptySquares = gridArr.map((row, i) => {
+    return row.filter((col, j) => {
+      if (col.textContent == " ") {
+        return col;
+      }
+    });
+  });
+  emptySquares
+    .flat()
+    .forEach((curr) => curr.addEventListener("mouseenter", hover, true));
+
+  emptySquares.flat().forEach((curr) => {
+    curr.addEventListener("click", eventSquare, true);
   });
 });
-console.log(emptySquares);
+
 solveBtn.addEventListener("click", () => {
   if (board && solveButtonState == 1) {
     for (let i = 0; i < gridArr.flat().length; i++) {
@@ -432,45 +470,6 @@ let gridTextcontent = gridArr.map((row, i) => {
   });
   return currentRow;
 });
-
-console.table(emptySquares);
-
-const clickSquare = function () {
-  emptySquares.flat().forEach((curr) => {
-    curr.addEventListener("mouseenter", (e) => {
-      if (clicked == false && solveState == false) {
-        gridArr.forEach((row, i) => {
-          row.forEach((col, j) => {
-            col.style.backgroundColor = "white";
-          });
-        });
-        emptySquares
-          .flat()
-          .forEach((current) => (current.style.backgroundColor = "white"));
-
-        curr.style.backgroundColor = "#ffd6ee";
-      }
-    });
-  });
-
-  function eventSquare(e) {
-    if (solveState == false) {
-      emptySquares.flat().forEach((current) => {
-        current.style.backgroundColor = "rgb(255, 255, 255)";
-      });
-      clicked == false ? (clicked = e.target) : (clicked = false);
-      e.target.style.backgroundColor = "rgb(255, 204, 238)";
-      console.log(clicked);
-      //  correct =
-      correct = checkSquare();
-      seletNum();
-    }
-  }
-
-  emptySquares.flat().forEach((curr) => {
-    curr.addEventListener("click", eventSquare);
-  });
-};
 
 function updateBoard(col, text) {
   let column = col;
@@ -554,7 +553,6 @@ function checkSquare(answerArray = true) {
   }
   return coards;
 }
-clickSquare();
 
 function checkForIncorrect(coards, chekingAnswer) {
   let [rowNumber, column] = coards;
